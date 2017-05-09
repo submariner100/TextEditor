@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITextViewDelegate, UIPickerViewDelegate
      var textString = "1."
      var lineNumber = 1
      let sizes = [12, 14, 16, 18, 20]
+     let colors = ["Black", "Red"]
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -24,12 +25,16 @@ class ViewController: UIViewController, UITextViewDelegate, UIPickerViewDelegate
           mainView.leftPanel.delegate = self
           mainView.rightPanel.delegate = self
           mainView.sizeLabel.delegate = self
+          mainView.colorLabel.delegate = self
           mainView.sizePicker.delegate = self
           mainView.sizePicker.dataSource = self
+          mainView.colorPicker.delegate = self
+          mainView.colorPicker.dataSource = self
           
-          
+                
      }
      
+          
      func numberOfComponents(in pickerView: UIPickerView) -> Int {
           
           return 1
@@ -37,20 +42,51 @@ class ViewController: UIViewController, UITextViewDelegate, UIPickerViewDelegate
      
      func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
           
-          return sizes.count
+          if pickerView == mainView.sizePicker {
+               return sizes.count
+               
+          } else if pickerView == mainView.colorPicker {
+               return colors.count
+          }
+               return 0
      }
-     
+   
      func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
           
-          return String(sizes[row])
+          if pickerView == mainView.sizePicker {
+                    return String(sizes[row])
+          } else if pickerView == mainView.colorPicker {
+                    return (colors[row])
+          }
+                    return ""
      }
      
      func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+     
+          if pickerView == mainView.sizePicker {
+               mainView.rightPanel.font = UIFont.systemFont(ofSize: CGFloat(sizes[row]))
+               mainView.leftPanel.font = UIFont.systemFont(ofSize: CGFloat(sizes[row]))
+               mainView.sizeLabel.text = String(sizes[row])
+               mainView.sizePicker.isHidden = true
+               mainView.sizeLabel.resignFirstResponder()
+               
+               
+          } else if pickerView == mainView.colorPicker {
+               mainView.colorPicker.isHidden = true
+                    if colors[row] == "Black" {
+                         mainView.rightPanel.textColor = UIColor.black
+                         mainView.leftPanel.textColor = UIColor.black
+                         mainView.colorLabel.text = "Black"
+                         mainView.colorLabel.resignFirstResponder()
+               } else if colors[row] == "Red" {
+                         mainView.rightPanel.textColor = UIColor.red
+                         mainView.leftPanel.textColor = UIColor.red
+                         mainView.colorLabel.text = "Red"
+                         mainView.colorLabel.resignFirstResponder()
+               }
+          }
           
-          mainView.rightPanel.font = UIFont.systemFont(ofSize: CGFloat(sizes[row]))
-          mainView.leftPanel.font = UIFont.systemFont(ofSize: CGFloat(sizes[row]))
-          mainView.sizeLabel.text = String(sizes[row])
-          mainView.sizePicker.isHidden = true
+          
           
           
      }
@@ -110,9 +146,25 @@ class ViewController: UIViewController, UITextViewDelegate, UIPickerViewDelegate
 
      func textFieldDidBeginEditing(_ textField: UITextField) {
           
-          mainView.sizePicker.isHidden = false
+          if textField == mainView.sizeLabel {
+               mainView.sizePicker.isHidden = false
+               
+          } else if textField == mainView.colorLabel {
+               mainView.colorPicker.isHidden = false
+          }
      }
      
+//     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//          
+//          if textField == mainView.sizeLabel {
+//               mainView.sizePicker.isHidden = false
+//               
+//          } else if textField == mainView.colorLabel {
+//               mainView.colorPicker.isHidden = true
+//          }
+//          return true
+//     }
+//     
 
 }
 

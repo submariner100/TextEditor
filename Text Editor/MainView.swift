@@ -17,13 +17,17 @@ class MainView: UIView {
      let colorLabel = UITextField()
      let sizeLabel = UITextField()
      let sizePicker = UIPickerView()
+     let colorPicker = UIPickerView()
 
      override init(frame: CGRect) {
           super.init(frame: frame)
           
           setupViews()
           
+          
      }
+     
+     
      
      func setupViews() {
           
@@ -88,6 +92,7 @@ class MainView: UIView {
           colorLabel.textAlignment = .center
           colorLabel.layer.masksToBounds = true
           colorLabel.layer.cornerRadius = 5
+          
           colorLabel.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor).isActive = true
           colorLabel.leftAnchor.constraint(equalTo: bottomBar.leftAnchor, constant: 16).isActive = true
           colorLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -102,6 +107,8 @@ class MainView: UIView {
           sizeLabel.textAlignment = .center
           sizeLabel.layer.masksToBounds = true
           sizeLabel.layer.cornerRadius = 5
+          
+          
           sizeLabel.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor).isActive = true
           sizeLabel.rightAnchor.constraint(equalTo: bottomBar.rightAnchor, constant: -16).isActive = true
           sizeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -114,6 +121,14 @@ class MainView: UIView {
           sizePicker.centerYAnchor.constraint(equalTo: rightPanel.centerYAnchor).isActive = true
           sizePicker.heightAnchor.constraint(equalToConstant: 200).isActive = true
           sizePicker.widthAnchor.constraint(equalToConstant: 100).isActive = true
+          
+          rightPanel.addSubview(colorPicker)
+          colorPicker.translatesAutoresizingMaskIntoConstraints = false
+          colorPicker.isHidden = true
+          colorPicker.centerXAnchor.constraint(equalTo: rightPanel.centerXAnchor).isActive = true
+          colorPicker.centerYAnchor.constraint(equalTo: rightPanel.centerYAnchor).isActive = true
+          colorPicker.heightAnchor.constraint(equalToConstant: 200).isActive = true
+          colorPicker.widthAnchor.constraint(equalToConstant: 100).isActive = true
           
           
           
